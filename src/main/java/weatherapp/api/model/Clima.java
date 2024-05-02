@@ -21,9 +21,10 @@ public class Clima {
     private Turno turno;
     private String data;
 
-    private int umidade;
-    private int precipitacao;
-    private int velVento;
+    private String umidade;
+    private String precipitacao;
+    private String velVento;
+    private String temperatura;
 
     public Clima(ClimaDTO clima) {
 
@@ -33,5 +34,6 @@ public class Clima {
         this.umidade = clima.umidade();
         this.precipitacao = clima.precipitacao();
         this.velVento = clima.velVento();
+        this.temperatura = clima.temperatura();
     }
 }

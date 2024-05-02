@@ -7,26 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import weatherapp.api.DTO.CidadeDTO;
 
-
-@Embeddable
-@Table(name = "cidades")
-@Entity(name = "Cidade")
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "nome")
 public class Cidade {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    String nome;
+    @Id
+    private String nome;
+
     @Embedded
     private Clima clima;
-
 
     public Cidade(CidadeDTO cidadeDTO) {
         this.nome = cidadeDTO.nome();
         this.clima = new Clima(cidadeDTO.clima());
-
     }
 }

@@ -1,7 +1,13 @@
 package weatherapp.api.DTO;
 
-public record  CidadeDTO(String nome,
-                         ClimaDTO clima
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+
+public record  CidadeDTO(
+        @NotBlank
+        String nome,
+        @Valid
+        ClimaDTO clima
 ) {
 
 }
