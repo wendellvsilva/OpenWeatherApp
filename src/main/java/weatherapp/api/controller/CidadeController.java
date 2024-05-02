@@ -13,6 +13,8 @@
     import weatherapp.api.model.Cidade;
     import weatherapp.api.repository.CidadeRepository;
 
+    import java.util.Optional;
+
     @RestController
     @RequestMapping("/cidades")
     public class CidadeController {
@@ -27,11 +29,15 @@
         @GetMapping
         public Page<CidadeListagem> listar(@PageableDefault(size = 10, sort = {"cidade"}) Pageable pagina) {
         return repository.findAll(pagina).map(CidadeListagem::new);
-    }
-        @PutMapping
+            }
+
+
+        @DeleteMapping("/{nome}")
         @Transactional
-        public void atualizar(@RequestBody @Valid CidadeUpdateDTO cidadeDTO){
-            var cidade = repository.getReferenceByCidade(cidadeDTO.cidade());
-            cidade.atualizarInfo(cidadeDTO);
+        public void deletarPorNome(@PathVariable("nome") String nome) {
+            Optional<Cidade> cidadeOptional = repository.findByCidade(nome);
+            cidadeOptional.ifPresent(repository::delete);
         }
-}
+
+    }
+

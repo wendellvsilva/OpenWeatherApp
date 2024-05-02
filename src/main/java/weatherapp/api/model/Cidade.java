@@ -6,13 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import weatherapp.api.DTO.CidadeDTO;
-import weatherapp.api.DTO.CidadeUpdateDTO;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "cidade")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "cidade"))
 public class Cidade {
 
     @Id
@@ -26,9 +26,7 @@ public class Cidade {
         this.clima = new Clima(cidadeDTO.clima());
     }
 
-    public void atualizarInfo(CidadeUpdateDTO cidadeDTO) {
-        if(cidadeDTO.temperatura() != null)
-            this.clima.setTemperatura(cidadeDTO.temperatura());
+    public void atualizarInfo(String novaTemperatura) {
+        this.clima.setTemperatura(novaTemperatura);
     }
-
 }
