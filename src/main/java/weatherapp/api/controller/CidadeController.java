@@ -1,12 +1,15 @@
     package weatherapp.api.controller;
 
+    import jakarta.transaction.Transactional;
     import jakarta.validation.Valid;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestBody;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RestController;
+    import org.springframework.data.domain.Page;
+    import org.springframework.data.domain.Pageable;
+    import org.springframework.data.web.PageableDefault;
+    import org.springframework.web.bind.annotation.*;
     import weatherapp.api.DTO.CidadeDTO;
+    import weatherapp.api.DTO.CidadeListagem;
+    import weatherapp.api.DTO.CidadeUpdateDTO;
     import weatherapp.api.model.Cidade;
     import weatherapp.api.repository.CidadeRepository;
 
@@ -15,10 +18,20 @@
     public class CidadeController {
         @Autowired
         private CidadeRepository repository;
+
         @PostMapping
-        public void cadastrar(@RequestBody @Valid CidadeDTO cidadeDTO){
+        @Transactional
+        public void cadastrar(@RequestBody @Valid CidadeDTO cidadeDTO) {
             repository.save(new Cidade(cidadeDTO));
-
-
         }
+        @GetMapping
+        public Page<CidadeListagem> listar(@PageableDefault(size = 10, sort = {"cidade"}) Pageable pagina) {
+        return repository.findAll(pagina).map(CidadeListagem::new);
     }
+        @PutMapping
+        @Transactional
+        public void atualizar(@RequestBody @Valid CidadeUpdateDTO cidadeDTO){
+            var cidade = repository.getReferenceByCidade(cidadeDTO.cidade());
+            cidade.atualizarInfo(cidadeDTO);
+        }
+}
