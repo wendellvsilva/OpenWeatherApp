@@ -31,10 +31,10 @@
         return repository.findAll(pagina).map(CidadeListagem::new);
             }
 
-
-        @DeleteMapping("/{nome}")
+            
+        @DeleteMapping("/{cidade}")
         @Transactional
-        public void deletarPorNome(@PathVariable("nome") String nome) {
+        public void deletarPorNome(@PathVariable("cidade") String nome) {
             Optional<Cidade> cidadeOptional = repository.findByCidade(nome);
             cidadeOptional.ifPresent(repository::delete);
         }

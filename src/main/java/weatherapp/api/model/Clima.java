@@ -36,7 +36,4 @@ public class Clima {
         this.velVento = clima.velVento();
         this.temperatura = clima.temperatura();
     }
-
-    public void setTemperatura(String temperatura) {
-    }
 }

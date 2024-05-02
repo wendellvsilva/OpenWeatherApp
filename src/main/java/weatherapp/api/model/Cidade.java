@@ -12,7 +12,7 @@ import weatherapp.api.DTO.CidadeDTO;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "cidade")
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "cidade"))
+@Table(name = "cidades")
 public class Cidade {
 
     @Id
@@ -26,7 +26,4 @@ public class Cidade {
         this.clima = new Clima(cidadeDTO.clima());
     }
 
-    public void atualizarInfo(String novaTemperatura) {
-        this.clima.setTemperatura(novaTemperatura);
-    }
 }
